@@ -9,7 +9,6 @@ import {
   logout,
 } from "../Services/UserAuthService";
 
-
 const HomePage = () => {
   const { addToCart, cart = [] } = useCart(); // Ensure cart defaults to an empty array
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -30,15 +29,14 @@ const HomePage = () => {
   );
 
   return (
-    <div
-      className="relative min-h-screen bg-cover bg-center bg-no-repeat"
+    <div className="relative min-h-screen bg-cover bg-center bg-fixed bg-no-repeat"
       style={{
         backgroundImage:
           "url('https://harperspizza.co.uk/wp-content/uploads/2023/08/pizza.png')",
       }}
     >
       {/* Navbar */}
-      <nav className="flex items-center justify-between p-6 bg-black bg-opacity-50">
+      <nav className="fixed top-0 left-0 right-0 flex items-center justify-between p-6 bg-black bg-opacity-50 z-50">
         <div className="text-white text-2xl font-bold">
           <img src={pizz} alt="Pizza Logo" className="h-10 inline-block mr-2" />
           Pizz
@@ -81,7 +79,6 @@ const HomePage = () => {
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-min bg-white border border-gray-200 rounded shadow-lg">
                   <div className="p-4 flex ">
-                    {/* <div className="font-bold text-gray-700">{user?.name}</div> */}
                     <div className="text-gray-500">{user?.email}</div>
                   </div>
                   <Link
@@ -104,18 +101,16 @@ const HomePage = () => {
       </nav>
 
       {/* Main Content */}
-      <div className="flex-grow flex flex-col justify-center items-center text-center">
-       
-
-        <div class="w-max">
-          <h1 class="animate-typing overflow-hidden whitespace-nowrap border-r-4 border-r-grey[700] pr-5 text-7xl  font-extrabold ">
+      <div className="pt-5rem md:mt-[6%] mt-[30%] pb-0 relative flex-grow flex flex-col justify-center items-center text-center z-10  ">
+        <div className="w-max mb-12">
+          <h1 className="lg:animate-typing lg:overflow-hidden lg:whitespace-nowrap border-r-4 border-r-grey[700] pr-5 md:text-7xl font-extrabold text-wrap text-4xl  ">
             Welcome To Pizz
           </h1>
         </div>
       </div>
 
       {/* Pizza Menu Overlay */}
-      <div className="top-30 left-0 right-0 bottom-0 flex items-center justify-center bg-grey bg-opacity-60 p-10">
+      <div className="absolute top-[20%] left-0 right-0 flex items-center justify-center  bg-opacity-60 p-10 z-20 md:mt-12">
         <div className="bg-white bg-opacity-80 p-10 rounded-lg shadow-lg w-full max-w-screen-lg">
           <h2 className="text-3xl font-bold text-center mb-8">Our Menu</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -137,7 +132,7 @@ const HomePage = () => {
                   </span>
                   <button
                     onClick={() => addToCart(pizza)}
-                    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+                    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition rounded-2xl "
                   >
                     Add to Cart
                   </button>

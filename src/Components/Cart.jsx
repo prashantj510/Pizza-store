@@ -1,12 +1,11 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from './CartContext'; // Import the hook
 import pizz from './../Assets/pizza.png';
-import { isUserLoggedIn, getLoggedInUser,logout } from '../Services/UserAuthService';
+import { isUserLoggedIn, getLoggedInUser, logout } from '../Services/UserAuthService';
 
 const Cart = () => {
   const { cart, updateQuantity, removeFromCart, getTotal } = useCart(); // Get functions from context
-  // const { addToCart } = useCart(); // Get the addToCart function
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const isLoggedIn = isUserLoggedIn();
   const user = isLoggedIn ? getLoggedInUser() : null; // Get user details if logged in
@@ -18,32 +17,39 @@ const Cart = () => {
     window.location.reload();
   };
 
+  const incrementQuantity = (itemId, currentQuantity) => {
+    updateQuantity(itemId, currentQuantity + 1);
+  };
+
+  const decrementQuantity = (itemId, currentQuantity) => {
+    if (currentQuantity > 1) {
+      updateQuantity(itemId, currentQuantity - 1);
+    }
+  };
+
   return (
     <div className="relative min-h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('https://harperspizza.co.uk/wp-content/uploads/2023/08/pizza.png')" }}>
       
-        {/* Navbar */}
-        <nav className="flex items-center justify-between p-6 bg-black bg-opacity-50">
+      {/* Navbar */}
+      <nav className="flex items-center justify-between p-6 bg-black bg-opacity-50">
         <Link to='/'><div className="text-white text-2xl font-bold">
           <img src={pizz} alt="Pizza Logo" className="h-10 inline-block mr-2" />
           Pizz
         </div></Link>
         <div className="space-x-4 flex items-center">
           {!isLoggedIn && <Link to='/Login'><button className="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700 transition">Login</button></Link>}
-          {/* <Link to='/cart'><button className="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700 transition">Cart</button></Link> */}
           {isLoggedIn && (
             <div className="relative">
               <button
                 onClick={toggleDropdown}
-                className="flex items-center  bg-gray-800 rounded-full h-10 w-10 hover:bg-gray-700 focus:outline-none"
+                className="flex items-center bg-gray-800 rounded-full h-10 w-10 hover:bg-gray-700 focus:outline-none"
               >
                 <span className="sr-only">User Profile</span>
-                {/* User profile icon */}
                 <img src={pizz} alt="User Profile" className="h-8 w-8 rounded-full" />
               </button>
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-min bg-white border border-gray-200 rounded shadow-lg">
                   <div className="p-4 flex ">
-                    {/* <div className="font-bold text-gray-700">{user?.name}</div> */}
                     <div className="text-gray-500">{user?.email}</div>
                   </div>
                   <Link to="/settings" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Settings</Link>
@@ -60,7 +66,6 @@ const Cart = () => {
         </div>
       </nav>
 
-
       {/* Cart Content */}
       <div className="flex-grow flex flex-col justify-center items-center text-center p-6 bg-white bg-opacity-80">
         <h1 className="text-4xl font-extrabold mb-6">Your Cart</h1>
@@ -74,15 +79,21 @@ const Cart = () => {
                   <div>
                     <h3 className="text-xl font-bold">{item.name}</h3>
                     <p className="text-gray-700">Price: ${item.price.toFixed(2)}</p>
-                    <p className="text-gray-700">Quantity: 
-                      <input 
-                        type="number" 
-                        min="1" 
-                        value={item.quantity} 
-                        onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))} 
-                        className="ml-2 w-16 text-center border border-gray-300 rounded"
-                      />
-                    </p>
+                    <div className="flex items-center mt-2">
+                      <button 
+                        onClick={() => decrementQuantity(item.id, item.quantity)} 
+                        className="px-2 py-1 bg-gray-300 text-gray-700 rounded-l focus:outline-none"
+                      >
+                        -
+                      </button>
+                      <span className="px-4 py-2 bg-gray-200 text-gray-700">{item.quantity}</span>
+                      <button 
+                        onClick={() => incrementQuantity(item.id, item.quantity)} 
+                        className="px-2 py-1 bg-gray-300 text-gray-700 rounded-r focus:outline-none"
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
                   <span className="text-xl font-bold">${(item.price * item.quantity).toFixed(2)}</span>
                   <button 
@@ -98,7 +109,7 @@ const Cart = () => {
                 <span className="text-2xl font-bold">${getTotal()}</span>
               </div>
               <div className="mt-6 flex justify-center">
-                <Link to="/checkout">
+                <Link to="/payment">
                   <button className="px-6 py-3 bg-red-600 text-white rounded hover:bg-red-700 transition">Proceed to Checkout</button>
                 </Link>
               </div>
