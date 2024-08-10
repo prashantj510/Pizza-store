@@ -1,25 +1,65 @@
-import React from 'react';
+import React, {  useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from './CartContext'; // Import the hook
 import pizz from './../Assets/pizza.png';
+import { isUserLoggedIn, getLoggedInUser,logout } from '../Services/UserAuthService';
 
 const Cart = () => {
   const { cart, updateQuantity, removeFromCart, getTotal } = useCart(); // Get functions from context
+  // const { addToCart } = useCart(); // Get the addToCart function
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const isLoggedIn = isUserLoggedIn();
+  const user = isLoggedIn ? getLoggedInUser() : null; // Get user details if logged in
+
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+  
+  const handleLogout = () => {
+    logout();
+    window.location.reload();
+  };
 
   return (
     <div className="relative min-h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('https://harperspizza.co.uk/wp-content/uploads/2023/08/pizza.png')" }}>
       
-      {/* Navbar */}
-      <nav className="flex items-center justify-between p-6 bg-black bg-opacity-50">
-        <div className="text-white text-2xl font-bold">
+        {/* Navbar */}
+        <nav className="flex items-center justify-between p-6 bg-black bg-opacity-50">
+        <Link to='/'><div className="text-white text-2xl font-bold">
           <img src={pizz} alt="Pizza Logo" className="h-10 inline-block mr-2" />
           Pizz
-        </div>
-        <div className="space-x-4">
-          <Link to='Login'><button className="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700 transition">Login</button></Link>
-          <Link to='cart'><button className="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700 transition">Cart</button></Link>
+        </div></Link>
+        <div className="space-x-4 flex items-center">
+          {!isLoggedIn && <Link to='/Login'><button className="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700 transition">Login</button></Link>}
+          {/* <Link to='/cart'><button className="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700 transition">Cart</button></Link> */}
+          {isLoggedIn && (
+            <div className="relative">
+              <button
+                onClick={toggleDropdown}
+                className="flex items-center  bg-gray-800 rounded-full h-10 w-10 hover:bg-gray-700 focus:outline-none"
+              >
+                <span className="sr-only">User Profile</span>
+                {/* User profile icon */}
+                <img src={pizz} alt="User Profile" className="h-8 w-8 rounded-full" />
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-min bg-white border border-gray-200 rounded shadow-lg">
+                  <div className="p-4 flex ">
+                    {/* <div className="font-bold text-gray-700">{user?.name}</div> */}
+                    <div className="text-gray-500">{user?.email}</div>
+                  </div>
+                  <Link to="/settings" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Settings</Link>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </nav>
+
 
       {/* Cart Content */}
       <div className="flex-grow flex flex-col justify-center items-center text-center p-6 bg-white bg-opacity-80">

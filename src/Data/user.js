@@ -14,7 +14,22 @@ export function checkIfUserExist(username,password) {
     delete user.password;
     return user;
 }
-export function setUsers(user) {
-    users.push(user);
-}
+// export function setUsers(user) {
+//     users.push(user);
+// }
 
+export const setUsers = (email, password) => {
+    // Assuming users are stored in local storage for this example
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+    
+    // Check if the user already exists
+    if (users.some(user => user.email === email)) {
+      return false; // User already exists
+    }
+    
+    const newUser = { email, password };
+    users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(users));
+    return newUser; // Return the new user object if registration is successful
+  };
+  

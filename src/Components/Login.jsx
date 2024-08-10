@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./Login.css";
 import {checkIfUserExist,} from '../Data/user'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -116,7 +116,7 @@ const Login = () => {
         <div className="px-8 py-4 bg-blue-200 dark:bg-zinc-800">
           <div className="text-sm text-blue-900 dark:text-blue-300 text-center">
             Don't have an account?
-            {/* <a className="font-medium underline" href="#">Sign up</a> */}
+            <Link to='/signup'>SignUp</Link>
           </div>
         </div>
       </form>

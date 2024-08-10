@@ -10,6 +10,7 @@ import {
 import Home from "./Components/Home";
 import Login from "./Components/Login";
 import Cart from "./Components/Cart";
+import Signup from "./Components/SignUp";
 
 const App = () => {
   return (
@@ -21,6 +22,8 @@ const App = () => {
                       element={<Cart />} />
                   <Route path="/Login"
                       element={<Login />} />
+                  <Route path="/signup"
+                      element={<Signup />} />
               </Routes>
           </Router>
       </div>
