@@ -1,0 +1,73 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useCart } from './CartContext'; // Import the hook
+import pizz from './../Assets/pizza.png';
+
+const Cart = () => {
+  const { cart, updateQuantity, removeFromCart, getTotal } = useCart(); // Get functions from context
+
+  return (
+    <div className="relative min-h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('https://harperspizza.co.uk/wp-content/uploads/2023/08/pizza.png')" }}>
+      
+      {/* Navbar */}
+      <nav className="flex items-center justify-between p-6 bg-black bg-opacity-50">
+        <div className="text-white text-2xl font-bold">
+          <img src={pizz} alt="Pizza Logo" className="h-10 inline-block mr-2" />
+          Pizz
+        </div>
+        <div className="space-x-4">
+          <Link to='Login'><button className="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700 transition">Login</button></Link>
+          <Link to='cart'><button className="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700 transition">Cart</button></Link>
+        </div>
+      </nav>
+
+      {/* Cart Content */}
+      <div className="flex-grow flex flex-col justify-center items-center text-center p-6 bg-white bg-opacity-80">
+        <h1 className="text-4xl font-extrabold mb-6">Your Cart</h1>
+        <div className="w-full max-w-screen-lg">
+          {cart.length === 0 ? (
+            <p className="text-xl font-bold">Your cart is empty.</p>
+          ) : (
+            <div>
+              {cart.map(item => (
+                <div key={item.id} className="flex items-center justify-between bg-gray-100 p-4 mb-4 rounded-lg shadow-md">
+                  <div>
+                    <h3 className="text-xl font-bold">{item.name}</h3>
+                    <p className="text-gray-700">Price: ${item.price.toFixed(2)}</p>
+                    <p className="text-gray-700">Quantity: 
+                      <input 
+                        type="number" 
+                        min="1" 
+                        value={item.quantity} 
+                        onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))} 
+                        className="ml-2 w-16 text-center border border-gray-300 rounded"
+                      />
+                    </p>
+                  </div>
+                  <span className="text-xl font-bold">${(item.price * item.quantity).toFixed(2)}</span>
+                  <button 
+                    onClick={() => removeFromCart(item.id)}
+                    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+              <div className="mt-6 flex justify-between items-center bg-gray-200 p-4 rounded-lg shadow-md">
+                <h2 className="text-2xl font-bold">Total:</h2>
+                <span className="text-2xl font-bold">${getTotal()}</span>
+              </div>
+              <div className="mt-6 flex justify-center">
+                <Link to="/checkout">
+                  <button className="px-6 py-3 bg-red-600 text-white rounded hover:bg-red-700 transition">Proceed to Checkout</button>
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Cart;

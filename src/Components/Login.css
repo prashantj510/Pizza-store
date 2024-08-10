@@ -1,0 +1,4 @@
+/* Custom styles for hover effect */
+.group:hover .dropdown-menu {
+    display: block;
+  }

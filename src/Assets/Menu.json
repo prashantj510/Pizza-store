@@ -1,0 +1,52 @@
+[
+    {
+      "id": 1,
+      "name": "Margherita",
+      "description": "Classic delight with 100% real mozzarella cheese",
+      "price": 8.99,
+      "imageUrl": "https://harperspizza.co.uk/wp-content/uploads/2023/08/pizza.png"
+    },
+    {
+      "id": 2,
+      "name": "Pepperoni",
+      "description": "A classic American pizza topped with pepperoni",
+      "price": 10.99,
+      "imageUrl": "https://harperspizza.co.uk/wp-content/uploads/2023/08/pizza.png"
+    },
+    {
+      "id": 3,
+      "name": "BBQ Chicken",
+      "description": "Grilled chicken, BBQ sauce, and red onions",
+      "price": 11.99,
+      "imageUrl": "https://harperspizza.co.uk/wp-content/uploads/2023/08/pizza.png"
+    },
+    {
+        "id": 4,
+        "name": "BBQ Chicken",
+        "description": "Grilled chicken, BBQ sauce, and red onions",
+        "price": 11.99,
+        "imageUrl": "https://harperspizza.co.uk/wp-content/uploads/2023/08/pizza.png"
+      },
+      {
+        "id": 5,
+        "name": "BBQ Chicken",
+        "description": "Grilled chicken, BBQ sauce, and red onions",
+        "price": 11.99,
+        "imageUrl": "https://harperspizza.co.uk/wp-content/uploads/2023/08/pizza.png"
+      },
+      {
+        "id": 6,
+        "name": "BBQ Chicken",
+        "description": "Grilled chicken, BBQ sauce, and red onions",
+        "price": 11.99,
+        "imageUrl": "https://harperspizza.co.uk/wp-content/uploads/2023/08/pizza.png"
+      },
+      {
+        "id": 7,
+        "name": "BBQ Chicken",
+        "description": "Grilled chicken, BBQ sauce, and red onions",
+        "price": 11.99,
+        "imageUrl": "https://harperspizza.co.uk/wp-content/uploads/2023/08/pizza.png"
+      }
+  ]
+  
